@@ -3,7 +3,7 @@ export class Graph {
         this.gl = gl;
         this.color = color;
         this.points = [];
-        this.maxPoints = 200;
+        this.maxPoints = 100;
         this.minY = -0.5;
         this.maxY = -0.2;
         this.yRange = this.maxY - this.minY;
@@ -18,8 +18,12 @@ export class Graph {
         }
     }
 
+    getLatestValue() {
+        return this.points[this.points.length - 1];
+    }
+
     updateData() {
-        const lastPointY = getLatestValue();
+        const lastPointY = this.points[this.points.length - 1];
         const step = (Math.random() - 0.5) * 0.05;
         let newPointY = lastPointY + step;
         newPointY = Math.max(this.minY, Math.min(this.maxY, newPointY));
@@ -29,10 +33,6 @@ export class Graph {
             this.points.shift();
         }
         this.updateBuffers();
-    }
-
-    getLatestValue() {
-        return this.points[this.points.length - 1];
     }
 
     updateBuffers() {
